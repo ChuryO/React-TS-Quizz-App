@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Difficulty, fetchQuizQuestions, QuestionStateType} from "./API";
 import QuestionCard from "./components/QuestionCard";
+import {GlobalStyle, Wrapper} from "./App.styles";
 
 export type AnswerType = {
   question: string;
@@ -60,28 +61,31 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <h1>React Quiz</h1>
-      {gameOver || userAnswers.length === TOTAL_QUESTIONS
-        ? <button className="start" onClick={startTrivia}>Start</button>
-        : null}
-      {!gameOver && <p className='score'>{score}</p>}
-      {loading && <p className='loading'>Loading Question...</p>}
-      {!loading
-      && !gameOver
-      && <QuestionCard
-          questionNum={step + 1}
-          totalQuestions={TOTAL_QUESTIONS}
-          question={questions[step].question}
-          answers={questions[step].answers}
-          userAnswer={userAnswers ? userAnswers[step] : undefined}
-          callback={checkAnswer}
-      />}
-      {!loading
-      && userAnswers.length === step + 1
-      && step !== TOTAL_QUESTIONS - 1
-      && <button className='next' onClick={nextQuestion}>Next Question</button>}
-    </div>
+    <>
+      <GlobalStyle/>
+      <Wrapper>
+        <h1>React Quiz</h1>
+        {gameOver || userAnswers.length === TOTAL_QUESTIONS
+          ? <button className="start" onClick={startTrivia}>Start</button>
+          : null}
+        {!gameOver && <p className='score'>Score: {score}</p>}
+        {loading && <p className='loading'>Loading Question...</p>}
+        {!loading
+        && !gameOver
+        && <QuestionCard
+            questionNum={step + 1}
+            totalQuestions={TOTAL_QUESTIONS}
+            question={questions[step].question}
+            answers={questions[step].answers}
+            userAnswer={userAnswers ? userAnswers[step] : undefined}
+            callback={checkAnswer}
+        />}
+        {!loading
+        && userAnswers.length === step + 1
+        && step !== TOTAL_QUESTIONS - 1
+        && <button className='next' onClick={nextQuestion}>Next Question</button>}
+      </Wrapper>
+    </>
   );
 }
 
